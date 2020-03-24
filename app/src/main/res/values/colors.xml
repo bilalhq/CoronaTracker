@@ -3,8 +3,8 @@
     <color name="colorPrimary">#FFEB3B</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FFEB3B</color>
-    <color name="colorBackground">#D32929</color>
-    <color name="colorText">#fff</color>
+    <color name="colorBackground">#BE2E2E</color>
+    <color name="colorText">#FFFFFF</color>
     <color name="colorTextDark">#000</color>
     <color name="colorRecovered">#66BB6A</color>
     <color name="colorRecoveredSecondary">#81C784</color>

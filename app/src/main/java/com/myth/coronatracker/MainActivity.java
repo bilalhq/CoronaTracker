@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
 
 
-    String[] arr = {"Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"};
+    String[] arr = {"USA","Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,58 +85,6 @@ public class MainActivity extends AppCompatActivity {
         countryName.setThreshold(2);
         countryName.setAdapter(adapter);
 
-        /*button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!countryName.getText().toString().matches("")) {
-                    countryName.setEnabled(false);
-                    countryName.setEnabled(true);
-                    progressBar.setVisibility(View.VISIBLE);
-                    getCurrentFocus();
-                    AndroidNetworking.get("https://covid19-api.weedmark.systems/api/v1/stats?country={country}")
-                            .addPathParameter("country", countryName.getText().toString())
-                            .setPriority(Priority.LOW)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    Gson gson = new Gson();
-                                    covidStats stats = null;
-                                    try {
-                                        stats = gson.fromJson(response.getJSONObject("data").getJSONArray("covid19Stats").get(0).toString(), covidStats.class);
-                                        final covidStats finalStats = stats;
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                confirmed.setText(finalStats.getConfirmed() + "");
-                                                deaths.setText(finalStats.getDeaths() + "");
-                                                recovered.setText(finalStats.getRecovered() + "");
-                                                updated.setText(finalStats.getLastUpdate() + "");
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                progressBar.setVisibility(View.GONE);
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onError(ANError error) {
-                                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                } else {
-                    Toast.makeText(MainActivity.this, "Enter country name!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.VISIBLE);
                     AndroidNetworking.get("https://covid-193.p.rapidapi.com/statistics")
-                            .addQueryParameter("country", countryName.getText().toString())
+                            .addQueryParameter("country", countryName.getText().toString().matches("United Kingdom")?"UK":countryName.getText().toString())
                             .addHeaders("x-rapidapi-host", "covid-193.p.rapidapi.com")
                             .addHeaders("x-rapidapi-key", "G2U0tJa3h5msh3uwlVbQCwyz0tf6p14q0nHjsnM8wWjLVV6hgQ")
                             .setPriority(Priority.LOW)
