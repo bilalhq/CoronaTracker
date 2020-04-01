@@ -46,6 +46,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
 
 
-    String[] arr = {"USA","Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"};
+    String[] arr = {"USA", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde", "Cayman Islands", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cruise Ship", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         chart.setNoDataText("");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, arr);
+                (this, android.R.layout.select_dialog_item, arr);
 
         countryName.setThreshold(2);
         countryName.setAdapter(adapter);
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.VISIBLE);
                     AndroidNetworking.get("https://covid-193.p.rapidapi.com/statistics")
-                            .addQueryParameter("country", countryName.getText().toString().matches("United Kingdom")?"UK":countryName.getText().toString())
+                            .addQueryParameter("country", countryName.getText().toString().matches("United Kingdom") ? "UK" : countryName.getText().toString().replace(' ', '-'))
                             .addHeaders("x-rapidapi-host", "covid-193.p.rapidapi.com")
                             .addHeaders("x-rapidapi-key", "G2U0tJa3h5msh3uwlVbQCwyz0tf6p14q0nHjsnM8wWjLVV6hgQ")
                             .setPriority(Priority.LOW)
@@ -130,15 +131,15 @@ public class MainActivity extends AppCompatActivity {
                                         final covidDeaths finalDeaths = coviddeaths;
                                         final String finalDay = day;
                                         final String finalTime = time;
-                                        final String finalNewcases = newcases;
-                                        final String finalNewdeaths = newdeaths;
+                                        final String finalNewcases = newcases.matches("null") ? "" : newcases;
+                                        final String finalNewdeaths = newdeaths.matches("null") ? "" : newdeaths;
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
                                                 confirmed.setText(finalCases.getActive() + "");
                                                 deaths.setText(finalDeaths.getTotal() + "");
                                                 recovered.setText(finalCases.getRecovered() + "");
-                                                updated.setText("last updated: "+finalTime.replace('T', ' '));
+                                                updated.setText("last updated: " + finalTime.replace('T', ' '));
                                                 total.setText(finalCases.getTotal() + "");
                                                 txtNewCases.setText(finalNewcases);
                                                 txtNewDeaths.setText(finalNewdeaths);
@@ -171,11 +172,11 @@ public class MainActivity extends AppCompatActivity {
                                 public void onResponse(JSONObject response) {
                                     int count = 0;
                                     Gson gson = new Gson();
-                                    ArrayList<Entry> entries = new ArrayList<>();
-                                    Map<String, String> map = new HashMap<>();
-                                    String[] dates = null;
-                                    String[] cases = null;
-                                    Iterator<String> sIterator = null;
+                                    ArrayList<Entry> entriesConfirmed = new ArrayList<>();
+                                    ArrayList<Entry> entriesDeaths = new ArrayList<>();
+                                    ArrayList<Entry> entriesRecovered = new ArrayList<>();
+
+                                    Iterator<String> sIterator;
                                     try {
                                         int days = 0;
                                         sIterator = response.getJSONObject("result").keys();
@@ -185,31 +186,56 @@ public class MainActivity extends AppCompatActivity {
                                             // get key
                                             String key = sIterator.next();
                                             // get value
-                                            String value = response.getJSONObject("result").getJSONObject(key).getInt("confirmed")+"";
-                                            map.put(key, value);
-                                            entries.add(new Entry(days, Integer.parseInt(value)));
+                                            String valueConfirmed = response.getJSONObject("result").getJSONObject(key).getInt("confirmed") + "";
+                                            String valueDeaths = response.getJSONObject("result").getJSONObject(key).getInt("deaths") + "";
+                                            String valueRecovered = response.getJSONObject("result").getJSONObject(key).getInt("recovered") + "";
+
+                                            entriesConfirmed.add(new Entry(days, Integer.parseInt(valueConfirmed)));
+                                            entriesDeaths.add(new Entry(days, Integer.parseInt(valueDeaths)));
+                                            entriesRecovered.add(new Entry(days, Integer.parseInt(valueRecovered)));
                                         }
-                                        final ArrayList<Entry> finalEntries = entries;
+
+                                        final ArrayList<Entry> finalEntriesDeaths = entriesDeaths;
+                                        final ArrayList<Entry> finalEntriesRecovered = entriesRecovered;
+                                        final ArrayList<Entry> finalEntriesConfirmed = entriesConfirmed;
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
 
-                                                LineDataSet dataSet = new LineDataSet(finalEntries, "Cases by day from 1st Jan");
-                                                dataSet.setLineWidth(2);
-                                                dataSet.setColor(ContextCompat.getColor(MainActivity.this, R.color.colorDeathsSecondary));
-                                                dataSet.setValueTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorTextDark));
-                                                dataSet.setValueTextSize(0);
-                                                dataSet.setDrawCircleHole(false);
-                                                dataSet.setDrawCircles(false);
-                                                dataSet.setCircleColor(R.color.colorDeaths);
+                                                LineDataSet dataSetTotal = new LineDataSet(finalEntriesConfirmed, "Total");
+                                                dataSetTotal.setAxisDependency(YAxis.AxisDependency.LEFT);
+                                                dataSetTotal.setLineWidth(2);
+                                                dataSetTotal.setColor(ContextCompat.getColor(MainActivity.this, R.color.colorTextDark));
+                                                dataSetTotal.setValueTextSize(0);
+                                                dataSetTotal.setDrawCircleHole(false);
+                                                dataSetTotal.setDrawCircles(false);
+
+                                                LineDataSet dataSetDeaths = new LineDataSet(finalEntriesDeaths, "Deaths");
+                                                dataSetDeaths.setAxisDependency(YAxis.AxisDependency.LEFT);
+                                                dataSetDeaths.setLineWidth(2);
+                                                dataSetDeaths.setColor(ContextCompat.getColor(MainActivity.this, R.color.colorDeaths));
+                                                dataSetDeaths.setValueTextSize(0);
+                                                dataSetDeaths.setDrawCircleHole(false);
+                                                dataSetDeaths.setDrawCircles(false);
+
+                                                LineDataSet dataSetRecovered = new LineDataSet(finalEntriesRecovered, "Recovered");
+                                                dataSetRecovered.setAxisDependency(YAxis.AxisDependency.LEFT);
+                                                dataSetRecovered.setLineWidth(2);
+                                                dataSetRecovered.setColor(ContextCompat.getColor(MainActivity.this, R.color.colorRecovered));
+                                                dataSetRecovered.setValueTextSize(0);
+                                                dataSetRecovered.setDrawCircleHole(false);
+                                                dataSetRecovered.setDrawCircles(false);
+
                                                 Description description = chart.getDescription();
-                                                description.setEnabled(false);
+                                                description.setEnabled(true);
+                                                description.setText("Last 60 days");
 
                                                 chart.setDrawGridBackground(false);
                                                 XAxis xAxis = chart.getXAxis();
                                                 xAxis.setDrawGridLines(false);
                                                 xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                                                 xAxis.setDrawAxisLine(false);
+                                                xAxis.setAxisMinimum(0f);
 
                                                 YAxis yAxisRight = chart.getAxisRight();
                                                 yAxisRight.setEnabled(false);
@@ -219,7 +245,12 @@ public class MainActivity extends AppCompatActivity {
                                                 yAxisLeft.setDrawAxisLine(false);
                                                 yAxisLeft.setDrawGridLines(false);
 
-                                                LineData data = new LineData(dataSet);
+                                                List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+                                                dataSets.add(dataSetRecovered);
+                                                dataSets.add(dataSetDeaths);
+                                                dataSets.add(dataSetTotal);
+
+                                                LineData data = new LineData(dataSets);
                                                 chart.setData(data);
                                                 chart.animateX(500);
 
@@ -227,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
 
                                     }
                                 }
